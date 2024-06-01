@@ -1,5 +1,6 @@
 package com.arrebol.kanxue.auth.controller;
 
+import com.arrebol.framework.biz.operationlog.aspect.ApiOperationLog;
 import com.arrebol.framework.common.response.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

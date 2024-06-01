@@ -6,10 +6,10 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Documented
 public @interface ApiOperationLog {
+
     /**
      * API 功能描述
      */
     String description() default "";
 
 }
-
