@@ -36,7 +36,7 @@ class KanxueAuthApplicationTests {
      */
     @Test
     void testSelect() {
-        // 查询主键 ID 为 4 的记录
+        // 查询主键 ID 为 1 的记录
         UserDO userDO = userDOMapper.selectByPrimaryKey(1L);
         log.info("User: {}", JsonUtil.toJsonString(userDO));
     }
