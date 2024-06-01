@@ -19,6 +19,7 @@
     <!-- 认证服务 -->
     <module>kanxue-auth</module>
     <module>kanxue-framework</module>
+      <module>kanxue-framework/kanxue-spring-boot-starter-jackson</module>
   </modules>
 
   <properties>

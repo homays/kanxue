@@ -48,7 +48,7 @@ class KanxueAuthApplicationTests {
     void testUpdate() {
         UserDO userDO = UserDO.builder()
                 .id(1L)
-                .username("雁门看雪人")
+                .username("雁门看雪")
                 .updateTime(LocalDateTime.now())
                 .build();
 

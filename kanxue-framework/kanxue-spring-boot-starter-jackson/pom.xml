@@ -10,9 +10,9 @@
     <!-- 指定打包方式 -->
     <packaging>jar</packaging>
 
-    <artifactId>kanxue-spring-boot-starter-biz-operationlog</artifactId>
+    <artifactId>kanxue-spring-boot-starter-jackson</artifactId>
     <name>${project.artifactId}</name>
-    <description>接口日志组件</description>
+    <description>自定义 Jackson 配置: 支持 Java 8 新的日期 API，如 LocalDateTime、LocalDate 等等</description>
 
     <dependencies>
         <dependency>
