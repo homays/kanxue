@@ -1,5 +1,7 @@
-package com.arrebol.framework.jackson.config;
+package com.arrebol.kanxue.auth.config;
 
+import com.arrebol.framework.common.constant.DateConstants;
+import com.arrebol.framework.common.util.JsonUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -12,19 +14,18 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.YearMonthSerializer;
-import com.arrebol.framework.common.constant.DateConstants;
-import com.arrebol.framework.common.util.JsonUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
-@AutoConfiguration
-public class JacksonAutoConfiguration {
+@Configuration
+public class JacksonConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -34,6 +35,7 @@ public class JacksonAutoConfiguration {
         // 忽略未知属性
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        
         // 设置凡是为 null 的字段，返参中均不返回，请根据项目组约定是否开启
         // objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
@@ -56,10 +58,8 @@ public class JacksonAutoConfiguration {
 
         objectMapper.registerModule(javaTimeModule);
 
-        // 初始化 JsonUtils 中的 ObjectMapper
         JsonUtil.init(objectMapper);
 
         return objectMapper;
     }
-
 }
