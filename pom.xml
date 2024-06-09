@@ -46,7 +46,6 @@
         <sa-token.version>1.38.0</sa-token.version>
         <hutool.version>5.8.26</hutool.version>
         <dysmsapi.version>2.0.24</dysmsapi.version>
-        <jasypt.version>3.0.3</jasypt.version>
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -152,13 +151,6 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>dysmsapi20170525</artifactId>
                 <version>${dysmsapi.version}</version>
-            </dependency>
-
-            <!-- 敏感信息加密、解密 -->
-            <dependency>
-                <groupId>com.github.ulisesbocchio</groupId>
-                <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${jasypt.version}</version>
             </dependency>
 
         </dependencies>
