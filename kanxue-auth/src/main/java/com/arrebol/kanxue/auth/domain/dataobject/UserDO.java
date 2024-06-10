@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,10 +15,30 @@ public class UserDO {
 
     private Long id;
 
-    private String username;
+    private String kanxueId;
 
-    private LocalDateTime createTime;
+    private String password;
 
-    private LocalDateTime updateTime;
+    private String nickname;
+
+    private String avatar;
+
+    private Date birthday;
+
+    private String backgroundImg;
+
+    private String phone;
+
+    private Byte sex;
+
+    private Byte status;
+
+    private String introduction;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Boolean isDeleted;
 
 }
