@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -18,15 +18,15 @@ public class RoleDO {
 
     private String roleKey;
 
-    private Byte status;
+    private Integer status;
 
     private Integer sort;
 
     private String remark;
 
-    private Date createTime;
+    private LocalDate createTime;
 
-    private Date updateTime;
+    private LocalDate updateTime;
 
     private Boolean isDeleted;
 

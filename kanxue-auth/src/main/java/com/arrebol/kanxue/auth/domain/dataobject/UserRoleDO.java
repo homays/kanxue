@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -18,9 +18,9 @@ public class UserRoleDO {
 
     private Long roleId;
 
-    private Date createTime;
+    private LocalDate createTime;
 
-    private Date updateTime;
+    private LocalDate updateTime;
 
     private Boolean isDeleted;
 

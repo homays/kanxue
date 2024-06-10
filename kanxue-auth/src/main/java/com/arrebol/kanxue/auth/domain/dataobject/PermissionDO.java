@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class PermissionDO {
 
     private String name;
 
-    private Byte type;
+    private Integer type;
 
     private String menuUrl;
 
@@ -28,11 +28,11 @@ public class PermissionDO {
 
     private String permissionKey;
 
-    private Byte status;
+    private Integer status;
 
-    private Date createTime;
+    private LocalDate createTime;
 
-    private Date updateTime;
+    private LocalDate updateTime;
 
     private Boolean isDeleted;
 
