@@ -52,12 +52,12 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         String verificationCode  = RandomUtil.randomNumbers(6);
 
         // 调用第三方短信发送服务
-        threadPoolTaskExecutor.submit(() -> {
+        /*threadPoolTaskExecutor.submit(() -> {
             String signName = "阿里云短信测试";
             String templateCode = "SMS_154950909";
             String templateParam = String.format("{\"code\":\"%s\"}", verificationCode);
             aliyunSmsHelper.sendMessage(signName, templateCode, phone, templateParam);
-        });
+        });*/
 
         log.info("==> 手机号: {}, 已发送验证码：【{}】", phone, verificationCode);
 
