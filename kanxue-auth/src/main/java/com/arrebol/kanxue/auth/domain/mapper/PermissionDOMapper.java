@@ -2,6 +2,8 @@ package com.arrebol.kanxue.auth.domain.mapper;
 
 import com.arrebol.kanxue.auth.domain.dataobject.PermissionDO;
 
+import java.util.List;
+
 public interface PermissionDOMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,9 @@ public interface PermissionDOMapper {
     int updateByPrimaryKeySelective(PermissionDO record);
 
     int updateByPrimaryKey(PermissionDO record);
+
+    /**
+     * 查询所有被启用的按钮(type = 3)权限
+     */
+    List<PermissionDO> selectAppEnabledList();
 }
