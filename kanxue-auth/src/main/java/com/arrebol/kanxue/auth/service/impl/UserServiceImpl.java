@@ -20,11 +20,11 @@ import com.arrebol.kanxue.auth.enums.LoginTypeEnum;
 import com.arrebol.kanxue.auth.enums.ResponseCodeEnum;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
 import com.arrebol.kanxue.auth.service.UserService;
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
@@ -66,11 +66,8 @@ public class UserServiceImpl implements UserService {
                 // 验证码
                 String code = userLoginReqVO.getCode();
 
-
                 // 校验验证码是否为空
-                if (StrUtil.isBlank(code)) {
-                    return Response.fail(ResponseCodeEnum.PARAM_NOT_VALID.getErrorCode());
-                }
+                Preconditions.checkArgument(StrUtil.isNotBlank(code), "验证码不能为空");
 
                 // 构建验证码 redis key
                 String key = RedisKeyConstants.buildVerificationCodeKey(phone);
