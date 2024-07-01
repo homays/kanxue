@@ -158,6 +158,13 @@
                 <version>${sa-token.version}</version>
             </dependency>
 
+            <!-- Gateway 整合 Sa-Token -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
             <!-- 相关工具类 -->
             <dependency>
                 <groupId>com.google.guava</groupId>
