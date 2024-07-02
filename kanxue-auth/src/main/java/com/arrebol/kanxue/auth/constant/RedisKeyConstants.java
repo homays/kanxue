@@ -32,15 +32,15 @@ public class RedisKeyConstants {
     /**
      * 构建用户权限 KEY
      */
-    public static String buildUserRoleKey(String phone) {
-        return USER_ROLES_KEY_PREFIX + phone;
+    public static String buildUserRoleKey(Long userId) {
+        return USER_ROLES_KEY_PREFIX + userId;
     }
 
     /**
      * 构建角色对应的权限集合 KEY
      */
-    public static String buildRolePermissionsKey(Long roleId) {
-        return ROLE_PERMISSIONS_KEY_PREFIX + roleId;
+    public static String buildRolePermissionsKey(String roleKey) {
+        return ROLE_PERMISSIONS_KEY_PREFIX + roleKey;
     }
 
 }

@@ -12,8 +12,10 @@ import com.arrebol.framework.common.response.Response;
 import com.arrebol.framework.common.util.JsonUtil;
 import com.arrebol.kanxue.auth.constant.RedisKeyConstants;
 import com.arrebol.kanxue.auth.constant.RoleConstants;
+import com.arrebol.kanxue.auth.domain.dataobject.RoleDO;
 import com.arrebol.kanxue.auth.domain.dataobject.UserDO;
 import com.arrebol.kanxue.auth.domain.dataobject.UserRoleDO;
+import com.arrebol.kanxue.auth.domain.mapper.RoleDOMapper;
 import com.arrebol.kanxue.auth.domain.mapper.UserDOMapper;
 import com.arrebol.kanxue.auth.domain.mapper.UserRoleDOMapper;
 import com.arrebol.kanxue.auth.enums.LoginTypeEnum;
@@ -49,6 +51,8 @@ public class UserServiceImpl implements UserService {
     private RedisTemplate<String, Object> redisTemplate;
     @Resource
     private TransactionTemplate transactionTemplate;
+    @Resource
+    private RoleDOMapper roleDOMapper;
 
     @Override
     public Response<String> loginAndRegister(UserLoginReqVO userLoginReqVO) {
@@ -145,10 +149,12 @@ public class UserServiceImpl implements UserService {
                         .build();
                 userRoleDOMapper.insert(userRoleDO);
 
+                RoleDO roleDO = roleDOMapper.selectByPrimaryKey(RoleConstants.COMMON_USER_ROLE_ID);
+
                 // 将该用户的角色 ID 存入 Redis 中
-                List<Long> roles = new ArrayList<>();
-                roles.add(RoleConstants.COMMON_USER_ROLE_ID);
-                String userRolesKey = RedisKeyConstants.buildUserRoleKey(phone);
+                List<String> roles = new ArrayList<>(1);
+                roles.add(roleDO.getRoleKey());
+                String userRolesKey = RedisKeyConstants.buildUserRoleKey(userId);
                 redisTemplate.opsForValue().set(userRolesKey, JsonUtil.toJsonString(roles));
 
                 return userId;
