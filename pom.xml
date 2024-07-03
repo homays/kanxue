@@ -20,6 +20,7 @@
         <module>kanxue-auth</module>
         <module>kanxue-framework</module>
         <module>kanxue-gateway</module>
+        <module>kanxue-oss</module>
     </modules>
 
     <properties>
