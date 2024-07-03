@@ -40,6 +40,19 @@
             <artifactId>kanxue-spring-boot-starter-biz-operationlog</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-spring-boot-starter-jackson</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 上下文组件 -->
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-spring-boot-starter-biz-context</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- Mybatis -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -134,12 +147,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
-        </dependency>
-
-        <!-- 上下文组件 -->
-        <dependency>
-            <groupId>com.arrebol</groupId>
-            <artifactId>kanxue-spring-boot-starter-biz-context</artifactId>
         </dependency>
     </dependencies>
 

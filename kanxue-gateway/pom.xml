@@ -68,6 +68,7 @@
         <dependency>
             <groupId>com.arrebol</groupId>
             <artifactId>kanxue-spring-boot-starter-jackson</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- 相关工具类 -->
