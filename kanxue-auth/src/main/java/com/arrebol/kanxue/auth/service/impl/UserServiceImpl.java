@@ -117,6 +117,12 @@ public class UserServiceImpl implements UserService {
         return Response.success(tokenInfo.tokenValue);
     }
 
+    @Override
+    public Response<?> logout(Long userId) {
+        StpUtil.logout(userId);
+        return Response.success();
+    }
+
     public Long registerUser(String phone) {
         return transactionTemplate.execute(status -> {
             try {
