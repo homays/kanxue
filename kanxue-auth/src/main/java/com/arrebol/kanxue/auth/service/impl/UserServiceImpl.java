@@ -4,7 +4,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
-import com.arrebol.framework.common.constant.CommonConstants;
+import com.arrebol.framework.common.constant.GlobalConstants;
 import com.arrebol.framework.common.enums.DeletedEnum;
 import com.arrebol.framework.common.enums.StatusEnum;
 import com.arrebol.framework.common.exception.BizException;
@@ -20,6 +20,7 @@ import com.arrebol.kanxue.auth.domain.mapper.UserDOMapper;
 import com.arrebol.kanxue.auth.domain.mapper.UserRoleDOMapper;
 import com.arrebol.kanxue.auth.enums.LoginTypeEnum;
 import com.arrebol.kanxue.auth.enums.ResponseCodeEnum;
+import com.arrebol.kanxue.auth.filter.LoginUserContextHolder;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
 import com.arrebol.kanxue.auth.service.UserService;
 import com.google.common.base.Preconditions;
@@ -118,8 +119,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response<?> logout(Long userId) {
-        StpUtil.logout(userId);
+    public Response<?> logout() {
+        StpUtil.logout(LoginUserContextHolder.getUserId());
         return Response.success();
     }
 
@@ -132,7 +133,7 @@ public class UserServiceImpl implements UserService {
                 UserDO userDO = UserDO.builder()
                         .phone(phone)
                         .kanxueId(String.valueOf(kanxueId)) // 自动生成看雪号 ID
-                        .nickname(CommonConstants.NICKNAME_PREFIX + kanxueId) // 自动生成昵称, 如：看雪_10000
+                        .nickname(GlobalConstants.NICKNAME_PREFIX + kanxueId) // 自动生成昵称, 如：看雪_10000
                         .status(StatusEnum.ENABLE.getValue()) // 状态为启用
                         .createTime(LocalDateTime.now())
                         .updateTime(LocalDateTime.now())

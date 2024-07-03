@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+/**
+ * 将用户 ID 存入到 Header中
+ * 已弃用
+ */
+@Deprecated
 @Component
 @Slf4j
 public class AddUserId2HeaderFilter implements GlobalFilter {
