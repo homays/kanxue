@@ -21,6 +21,8 @@
         <module>kanxue-spring-boot-starter-biz-operationlog</module>
         <!-- Jackson 组件 -->
         <!--<module>kanxue-spring-boot-starter-jackson</module>-->
+        <!-- 上下文组件 -->
+        <module>kanxue-spring-boot-starter-biz-context</module>
     </modules>
 
 </project>

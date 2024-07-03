@@ -135,6 +135,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
         </dependency>
+
+        <!-- 上下文组件 -->
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-spring-boot-starter-biz-context</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
