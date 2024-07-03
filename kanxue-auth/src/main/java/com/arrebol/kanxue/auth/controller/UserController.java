@@ -2,6 +2,7 @@ package com.arrebol.kanxue.auth.controller;
 
 import com.arrebol.framework.biz.operationlog.aspect.ApiOperationLog;
 import com.arrebol.framework.common.response.Response;
+import com.arrebol.kanxue.auth.model.vo.user.UpdatePasswordReqVO;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
 import com.arrebol.kanxue.auth.service.UserService;
 import jakarta.annotation.Resource;
@@ -27,6 +28,12 @@ public class UserController {
     @ApiOperationLog(description = "用户登出")
     public Response<?> logout() {
         return userService.logout();
+    }
+
+    @PostMapping("/password/update")
+    @ApiOperationLog(description = "修改密码")
+    public Response<?> updatePassword(@Validated @RequestBody UpdatePasswordReqVO updatePasswordReqVO) {
+        return userService.updatePassword(updatePasswordReqVO);
     }
 
 }

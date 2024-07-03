@@ -21,12 +21,14 @@ import com.arrebol.kanxue.auth.domain.mapper.UserDOMapper;
 import com.arrebol.kanxue.auth.domain.mapper.UserRoleDOMapper;
 import com.arrebol.kanxue.auth.enums.LoginTypeEnum;
 import com.arrebol.kanxue.auth.enums.ResponseCodeEnum;
+import com.arrebol.kanxue.auth.model.vo.user.UpdatePasswordReqVO;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
 import com.arrebol.kanxue.auth.service.UserService;
 import com.google.common.base.Preconditions;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -54,6 +56,8 @@ public class UserServiceImpl implements UserService {
     private TransactionTemplate transactionTemplate;
     @Resource
     private RoleDOMapper roleDOMapper;
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Response<String> loginAndRegister(UserLoginReqVO userLoginReqVO) {
@@ -121,6 +125,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<?> logout() {
         StpUtil.logout(LoginUserContextHolder.getUserId());
+        return Response.success();
+    }
+
+    @Override
+    public Response<?> updatePassword(UpdatePasswordReqVO updatePasswordReqVO) {
+        // 新密码
+        String newPassword = updatePasswordReqVO.getNewPassword();
+        // 密码加密
+        String encodePwd = passwordEncoder.encode(newPassword);
+
+        // 获取当前用户 ID
+        Long userId = LoginUserContextHolder.getUserId();
+
+        UserDO userDO = UserDO.builder()
+                .id(userId)
+                .password(encodePwd)
+                .updateTime(LocalDateTime.now())
+                .build();
+
+        // 更新密码
+        userDOMapper.updateByPrimaryKeySelective(userDO);
+
         return Response.success();
     }
 
