@@ -7,10 +7,7 @@ import com.arrebol.kanxue.auth.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -28,8 +25,8 @@ public class UserController {
 
     @PostMapping("/logout")
     @ApiOperationLog(description = "用户登出")
-    public Response<?> logout() {
-        // todo 账号退出登录逻辑待实现
+    public Response<?> logout(@RequestHeader("userId") String userId) {
+        log.info("==> 网关透传过来的用户 ID: {}", userId);
 
         return Response.success();
     }
