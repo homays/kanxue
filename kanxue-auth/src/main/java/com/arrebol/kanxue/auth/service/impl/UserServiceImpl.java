@@ -3,6 +3,7 @@ package com.arrebol.kanxue.auth.service.impl;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.arrebol.framework.biz.context.holder.LoginUserContextHolder;
 import com.arrebol.framework.common.constant.GlobalConstants;
@@ -66,9 +67,14 @@ public class UserServiceImpl implements UserService {
         // 手机号
         String phone = userLoginReqVO.getPhone();
 
+        LoginTypeEnum loginTypeEnum = LoginTypeEnum.valueOf(type);
+
+        if (ObjectUtil.isEmpty(loginTypeEnum)) {
+            throw new BizException(ResponseCodeEnum.LOGIN_TYPE_ERROR);
+        }
+
         Long userId = null;
 
-        LoginTypeEnum loginTypeEnum = LoginTypeEnum.valueOf(type);
         switch (loginTypeEnum) {
             // 验证码登录
             case VERIFICATION_CODE:
@@ -106,8 +112,25 @@ public class UserServiceImpl implements UserService {
                 break;
 
             case PASSWORD: // 密码登录
-                // todo
+                String password = userLoginReqVO.getPassword();
+                // 根据手机号查询用户
+                UserDO dbUser = userDOMapper.selectByPhone(phone);
+                // 判断用户是否存在
+                if (ObjectUtil.isEmpty(dbUser)) {
+                    throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
+                }
 
+                // 用户数据库中的密码
+                String dbPwd = dbUser.getPassword();
+
+                // 匹配密码是否一致
+                boolean isPwdCorrect = passwordEncoder.matches(password, dbPwd);
+
+                if (!isPwdCorrect) {
+                    throw new BizException(ResponseCodeEnum.PHONE_OR_PASSWORD_ERROR);
+                }
+
+                userId = dbUser.getId();
                 break;
             default:
                 break;
