@@ -6,6 +6,7 @@ import com.arrebol.kanxue.oss.biz.strategy.FileStrategy;
 import com.arrebol.kanxue.oss.biz.strategy.impl.AliyunOSSFileStrategy;
 import com.arrebol.kanxue.oss.biz.strategy.impl.MinioFileStrategy;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,12 +17,14 @@ import org.springframework.context.annotation.Configuration;
  * @date 2024/7/3
  */
 @Configuration
+@RefreshScope
 public class FileStrategyFactory {
 
-    @Value("${strategy.type}")
+    @Value("${storage.type}")
     private String strategyType;
 
     @Bean
+    @RefreshScope
     public FileStrategy getFileStrategy() {
         if (StrUtil.equals(strategyType, "minio")) {
             return new MinioFileStrategy();
