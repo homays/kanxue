@@ -22,6 +22,23 @@
         </dependency>
 
         <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-spring-boot-starter-biz-context</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-spring-boot-starter-jackson</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-spring-boot-starter-biz-operationlog</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -61,6 +78,10 @@
             <artifactId>druid-spring-boot-3-starter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
