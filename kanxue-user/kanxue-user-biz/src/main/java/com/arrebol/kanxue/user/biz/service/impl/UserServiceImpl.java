@@ -1,8 +1,10 @@
 package com.arrebol.kanxue.user.biz.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.nacos.shaded.com.google.common.base.Preconditions;
 import com.arrebol.framework.biz.context.holder.LoginUserContextHolder;
+import com.arrebol.framework.common.exception.BizException;
 import com.arrebol.framework.common.response.Response;
 import com.arrebol.framework.common.util.ParamUtils;
 import com.arrebol.kanxue.user.biz.domain.dataobject.UserDO;
@@ -10,15 +12,16 @@ import com.arrebol.kanxue.user.biz.domain.mapper.UserDOMapper;
 import com.arrebol.kanxue.user.biz.enums.ResponseCodeEnum;
 import com.arrebol.kanxue.user.biz.enums.SexEnum;
 import com.arrebol.kanxue.user.biz.model.vo.UpdateUserInfoReqVO;
+import com.arrebol.kanxue.user.biz.rpc.OssRpcService;
 import com.arrebol.kanxue.user.biz.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -26,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserDOMapper userDOMapper;
+    @Autowired
+    private OssRpcService ossRpcService;
 
     /**
      * 更新用户信息
@@ -41,8 +46,17 @@ public class UserServiceImpl implements UserService {
         // 头像
         MultipartFile avatarFile = updateUserInfoReqVO.getAvatar();
 
-        if (Objects.nonNull(avatarFile)) {
-            // todo: 调用对象存储服务上传文件
+        if (ObjectUtil.isNotNull(avatarFile)) {
+            String avatar = ossRpcService.uploadFile(avatarFile);
+            log.info("==> 调用 oss 服务成功，上传头像，url：{}", avatar);
+
+            // 若上传头像失败，则抛出业务异常
+            if (StrUtil.isBlank(avatar)) {
+                throw new BizException(ResponseCodeEnum.UPLOAD_AVATAR_FAIL);
+            }
+
+            userDO.setAvatar(avatar);
+            needUpdate = true;
         }
 
         // 昵称
@@ -63,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
         // 性别
         Integer sex = updateUserInfoReqVO.getSex();
-        if (Objects.nonNull(sex)) {
+        if (ObjectUtil.isNotNull(sex)) {
             Preconditions.checkArgument(SexEnum.isValid(sex), ResponseCodeEnum.SEX_VALID_FAIL);
             userDO.setSex(sex);
             needUpdate = true;
@@ -71,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
         // 生日
         LocalDate birthday = updateUserInfoReqVO.getBirthday();
-        if (Objects.nonNull(birthday)) {
+        if (ObjectUtil.isNotNull(birthday)) {
             userDO.setBirthday(birthday);
             needUpdate = true;
         }
@@ -86,8 +100,17 @@ public class UserServiceImpl implements UserService {
 
         // 背景图
         MultipartFile backgroundImgFile = updateUserInfoReqVO.getBackgroundImg();
-        if (Objects.nonNull(backgroundImgFile)) {
-            // todo: 调用对象存储服务上传文件
+        if (ObjectUtil.isNotNull(backgroundImgFile)) {
+            String backgroundImg = ossRpcService.uploadFile(backgroundImgFile);
+            log.info("==> 调用 oss 服务成功，上传背景图，url：{}", backgroundImg);
+
+            // 若上传背景图失败，则抛出业务异常
+            if (StrUtil.isBlank(backgroundImg)) {
+                throw new BizException(ResponseCodeEnum.UPLOAD_BACKGROUND_IMG_FAIL);
+            }
+
+            userDO.setBackgroundImg(backgroundImg);
+            needUpdate = true;
         }
 
         if (needUpdate) {

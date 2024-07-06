@@ -82,6 +82,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-oss-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
