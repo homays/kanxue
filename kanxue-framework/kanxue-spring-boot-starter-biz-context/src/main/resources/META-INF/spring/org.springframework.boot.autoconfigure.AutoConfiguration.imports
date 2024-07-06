@@ -1,1 +1,2 @@
 com.arrebol.framework.biz.context.config.ContextAutoConfiguration
+com.arrebol.framework.biz.context.config.FeignContextAutoConfiguration
