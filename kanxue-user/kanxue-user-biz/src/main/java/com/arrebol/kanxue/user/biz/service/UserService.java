@@ -2,7 +2,9 @@ package com.arrebol.kanxue.user.biz.service;
 
 import com.arrebol.framework.common.response.Response;
 import com.arrebol.kanxue.user.biz.model.vo.UpdateUserInfoReqVO;
+import com.arrebol.kanxue.user.dto.req.FindUserByPhoneReqDTO;
 import com.arrebol.kanxue.user.dto.req.RegisterUserReqDTO;
+import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 
 public interface UserService {
 
@@ -16,4 +18,8 @@ public interface UserService {
      */
     Response<Long> register(RegisterUserReqDTO registerUserReqDTO);
 
+    /**
+     * 根据电话获取用户信息
+     */
+    Response<FindUserByPhoneRspDTO> findByPhone(FindUserByPhoneReqDTO findUserByPhoneReqDTO);
 }

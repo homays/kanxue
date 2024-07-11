@@ -24,7 +24,9 @@ import com.arrebol.kanxue.user.biz.enums.SexEnum;
 import com.arrebol.kanxue.user.biz.model.vo.UpdateUserInfoReqVO;
 import com.arrebol.kanxue.user.biz.rpc.OssRpcService;
 import com.arrebol.kanxue.user.biz.service.UserService;
+import com.arrebol.kanxue.user.dto.req.FindUserByPhoneReqDTO;
 import com.arrebol.kanxue.user.dto.req.RegisterUserReqDTO;
+import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,6 +144,9 @@ public class UserServiceImpl implements UserService {
         return Response.success();
     }
 
+    /**
+     * 用户注册
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response<Long> register(RegisterUserReqDTO registerUserReqDTO) {
@@ -193,5 +198,26 @@ public class UserServiceImpl implements UserService {
         redisTemplate.opsForValue().set(userRolesKey, JsonUtil.toJsonString(roles));
 
         return Response.success(userId);
+    }
+
+    /**
+     * 根据电话获取用户信息
+     */
+    @Override
+    public Response<FindUserByPhoneRspDTO> findByPhone(FindUserByPhoneReqDTO findUserByPhoneReqDTO) {
+        String phone = findUserByPhoneReqDTO.getPhone();
+
+        UserDO userDO = userDOMapper.selectByPhone(phone);
+
+        if (ObjectUtil.isNull(userDO)) {
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
+        }
+
+        FindUserByPhoneRspDTO result = FindUserByPhoneRspDTO.builder()
+                .id(userDO.getId())
+                .password(userDO.getPassword())
+                .build();
+
+        return Response.success(result);
     }
 }
