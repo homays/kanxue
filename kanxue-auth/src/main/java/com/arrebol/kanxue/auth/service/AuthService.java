@@ -4,7 +4,7 @@ import com.arrebol.framework.common.response.Response;
 import com.arrebol.kanxue.auth.model.vo.user.UpdatePasswordReqVO;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
 
-public interface UserService {
+public interface AuthService {
 
     /**
      * 登录与注册

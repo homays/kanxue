@@ -4,6 +4,7 @@ import com.arrebol.framework.common.response.Response;
 import com.arrebol.kanxue.user.api.UserFeignApi;
 import com.arrebol.kanxue.user.dto.req.FindUserByPhoneReqDTO;
 import com.arrebol.kanxue.user.dto.req.RegisterUserReqDTO;
+import com.arrebol.kanxue.user.dto.req.UpdateUserPasswordReqDTO;
 import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,16 @@ public class UserRpcService {
         }
 
         return response.getData();
+    }
+
+    /**
+     * 修改密码
+     */
+    public void updatePassword(String encodePassword) {
+        UpdateUserPasswordReqDTO updateUserPasswordReqDTO = new UpdateUserPasswordReqDTO();
+        updateUserPasswordReqDTO.setEncodePassword(encodePassword);
+
+        userFeignApi.updatePassword(updateUserPasswordReqDTO);
     }
 
 }

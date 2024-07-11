@@ -6,26 +6,15 @@ import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.arrebol.framework.biz.context.holder.LoginUserContextHolder;
-import com.arrebol.framework.common.constant.GlobalConstants;
-import com.arrebol.framework.common.enums.DeletedEnum;
-import com.arrebol.framework.common.enums.StatusEnum;
 import com.arrebol.framework.common.exception.BizException;
 import com.arrebol.framework.common.response.Response;
-import com.arrebol.framework.common.util.JsonUtil;
 import com.arrebol.kanxue.auth.constant.RedisKeyConstants;
-import com.arrebol.kanxue.auth.constant.RoleConstants;
-import com.arrebol.kanxue.auth.domain.dataobject.RoleDO;
-import com.arrebol.kanxue.auth.domain.dataobject.UserDO;
-import com.arrebol.kanxue.auth.domain.dataobject.UserRoleDO;
-import com.arrebol.kanxue.auth.domain.mapper.RoleDOMapper;
-import com.arrebol.kanxue.auth.domain.mapper.UserDOMapper;
-import com.arrebol.kanxue.auth.domain.mapper.UserRoleDOMapper;
 import com.arrebol.kanxue.auth.enums.LoginTypeEnum;
 import com.arrebol.kanxue.auth.enums.ResponseCodeEnum;
 import com.arrebol.kanxue.auth.model.vo.user.UpdatePasswordReqVO;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
 import com.arrebol.kanxue.auth.rpc.UserRpcService;
-import com.arrebol.kanxue.auth.service.UserService;
+import com.arrebol.kanxue.auth.service.AuthService;
 import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 import com.google.common.base.Preconditions;
 import jakarta.annotation.Resource;
@@ -33,11 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 用户服务实现类
@@ -47,20 +31,12 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
     @Resource
     private UserRpcService userRpcService;
     @Resource
-    private UserDOMapper userDOMapper;
-    @Resource
-    private UserRoleDOMapper userRoleDOMapper;
-    @Resource
     private RedisTemplate<String, Object> redisTemplate;
-    @Resource
-    private TransactionTemplate transactionTemplate;
-    @Resource
-    private RoleDOMapper roleDOMapper;
     @Resource
     private PasswordEncoder passwordEncoder;
 
@@ -159,17 +135,8 @@ public class UserServiceImpl implements UserService {
         // 密码加密
         String encodePwd = passwordEncoder.encode(newPassword);
 
-        // 获取当前用户 ID
-        Long userId = LoginUserContextHolder.getUserId();
-
-        UserDO userDO = UserDO.builder()
-                .id(userId)
-                .password(encodePwd)
-                .updateTime(LocalDateTime.now())
-                .build();
-
-        // 更新密码
-        userDOMapper.updateByPrimaryKeySelective(userDO);
+        // RPC：调用用户服务，更新密码
+        userRpcService.updatePassword(encodePwd);
 
         return Response.success();
     }

@@ -26,10 +26,10 @@ import com.arrebol.kanxue.user.biz.rpc.OssRpcService;
 import com.arrebol.kanxue.user.biz.service.UserService;
 import com.arrebol.kanxue.user.dto.req.FindUserByPhoneReqDTO;
 import com.arrebol.kanxue.user.dto.req.RegisterUserReqDTO;
+import com.arrebol.kanxue.user.dto.req.UpdateUserPasswordReqDTO;
 import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserDOMapper userDOMapper;
-    @Autowired
+    @Resource
     private OssRpcService ossRpcService;
     @Resource
     private UserRoleDOMapper userRoleDOMapper;
@@ -219,5 +219,22 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         return Response.success(result);
+    }
+
+    @Override
+    public Response<?> updatePassword(UpdateUserPasswordReqDTO updateUserPasswordReqDTO) {
+        // 获取当前用户 ID
+        Long userId = LoginUserContextHolder.getUserId();
+
+        UserDO userDO = UserDO.builder()
+                .id(userId)
+                .password(updateUserPasswordReqDTO.getEncodePassword())
+                .updateTime(LocalDateTime.now())
+                .build();
+
+        // 更新密码
+        userDOMapper.updateByPrimaryKeySelective(userDO);
+
+        return Response.success();
     }
 }

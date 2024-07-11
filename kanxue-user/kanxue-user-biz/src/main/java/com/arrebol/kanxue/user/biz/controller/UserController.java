@@ -6,6 +6,7 @@ import com.arrebol.kanxue.user.biz.model.vo.UpdateUserInfoReqVO;
 import com.arrebol.kanxue.user.biz.service.UserService;
 import com.arrebol.kanxue.user.dto.req.FindUserByPhoneReqDTO;
 import com.arrebol.kanxue.user.dto.req.RegisterUserReqDTO;
+import com.arrebol.kanxue.user.dto.req.UpdateUserPasswordReqDTO;
 import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -45,5 +46,10 @@ public class UserController {
         return userService.findByPhone(findUserByPhoneReqDTO);
     }
 
+    @PostMapping("/password/update")
+    @ApiOperationLog(description = "密码更新")
+    public Response<?> updatePassword(@Validated @RequestBody UpdateUserPasswordReqDTO updateUserPasswordReqDTO) {
+        return userService.updatePassword(updateUserPasswordReqDTO);
+    }
 
 }

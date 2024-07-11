@@ -4,6 +4,7 @@ import com.arrebol.framework.common.response.Response;
 import com.arrebol.kanxue.user.biz.model.vo.UpdateUserInfoReqVO;
 import com.arrebol.kanxue.user.dto.req.FindUserByPhoneReqDTO;
 import com.arrebol.kanxue.user.dto.req.RegisterUserReqDTO;
+import com.arrebol.kanxue.user.dto.req.UpdateUserPasswordReqDTO;
 import com.arrebol.kanxue.user.dto.resp.FindUserByPhoneRspDTO;
 
 public interface UserService {
@@ -22,4 +23,10 @@ public interface UserService {
      * 根据电话获取用户信息
      */
     Response<FindUserByPhoneRspDTO> findByPhone(FindUserByPhoneReqDTO findUserByPhoneReqDTO);
+
+    /**
+     * 修改密码
+     */
+    Response<?> updatePassword(UpdateUserPasswordReqDTO updateUserPasswordReqDTO);
+
 }
