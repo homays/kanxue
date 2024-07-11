@@ -1,6 +1,6 @@
 package com.arrebol.kanxue.auth.model.vo.user;
 
-import com.arrebol.kanxue.auth.validator.PhoneNumber;
+import com.arrebol.framework.common.validator.PhoneNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

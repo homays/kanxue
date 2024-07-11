@@ -1,16 +1,16 @@
-package com.arrebol.kanxue.auth.runner;
+package com.arrebol.kanxue.user.biz.runner;
 
 import cn.hutool.core.collection.CollUtil;
+import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
+import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import com.arrebol.framework.common.util.JsonUtil;
-import com.arrebol.kanxue.auth.constant.RedisKeyConstants;
-import com.arrebol.kanxue.auth.domain.dataobject.PermissionDO;
-import com.arrebol.kanxue.auth.domain.dataobject.RoleDO;
-import com.arrebol.kanxue.auth.domain.dataobject.RolePermissionDO;
-import com.arrebol.kanxue.auth.domain.mapper.PermissionDOMapper;
-import com.arrebol.kanxue.auth.domain.mapper.RoleDOMapper;
-import com.arrebol.kanxue.auth.domain.mapper.RolePermissionDOMapper;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.arrebol.kanxue.user.biz.constant.RedisKeyConstants;
+import com.arrebol.kanxue.user.biz.domain.dataobject.PermissionDO;
+import com.arrebol.kanxue.user.biz.domain.dataobject.RoleDO;
+import com.arrebol.kanxue.user.biz.domain.dataobject.RolePermissionDO;
+import com.arrebol.kanxue.user.biz.domain.mapper.PermissionDOMapper;
+import com.arrebol.kanxue.user.biz.domain.mapper.RoleDOMapper;
+import com.arrebol.kanxue.user.biz.domain.mapper.RolePermissionDOMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

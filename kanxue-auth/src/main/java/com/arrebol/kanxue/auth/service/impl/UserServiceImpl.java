@@ -24,6 +24,7 @@ import com.arrebol.kanxue.auth.enums.LoginTypeEnum;
 import com.arrebol.kanxue.auth.enums.ResponseCodeEnum;
 import com.arrebol.kanxue.auth.model.vo.user.UpdatePasswordReqVO;
 import com.arrebol.kanxue.auth.model.vo.user.UserLoginReqVO;
+import com.arrebol.kanxue.auth.rpc.UserRpcService;
 import com.arrebol.kanxue.auth.service.UserService;
 import com.google.common.base.Preconditions;
 import jakarta.annotation.Resource;
@@ -47,6 +48,8 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
+    @Resource
+    private UserRpcService userRpcService;
     @Resource
     private UserDOMapper userDOMapper;
     @Resource
@@ -95,18 +98,14 @@ public class UserServiceImpl implements UserService {
                     throw new BizException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
                 }
 
-                UserDO userDO = userDOMapper.selectByPhone(phone);
-
-                log.info("==> 用户是否注册, phone: {}, userDO: {}", phone, JsonUtil.toJsonString(userDO));
+                // RPC：调用用户服务，注册用户
+                Long userIdTmp = userRpcService.registerUser(phone);
 
                 // 判断是否注册
-                if (ObjUtil.isNull(userDO)) {
-                    // 若此用户还没有注册，系统自动注册该用户
-                    userId = registerUser(phone);
-                } else {
-                    // 已注册，则获取其用户 ID
-                    userId = userDO.getId();
+                if (ObjUtil.isNull(userIdTmp)) {
+                   throw new BizException(ResponseCodeEnum.LOGIN_FAIL);
                 }
+                userId = userIdTmp;
                 // 删除验证码
                 redisTemplate.delete(key);
                 break;

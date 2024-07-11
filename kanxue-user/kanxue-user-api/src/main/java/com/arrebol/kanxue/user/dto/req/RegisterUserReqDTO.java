@@ -1,4 +1,4 @@
-package com.arrebol.kanxue.auth.model.vo.verificationcode;
+package com.arrebol.kanxue.user.dto.req;
 
 import com.arrebol.framework.common.validator.PhoneNumber;
 import jakarta.validation.constraints.NotBlank;
@@ -11,8 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SendVerificationCodeReqVO {
+public class RegisterUserReqDTO {
 
+    /**
+     * 手机号
+     */
     @NotBlank(message = "手机号不能为空")
     @PhoneNumber
     private String phone;
