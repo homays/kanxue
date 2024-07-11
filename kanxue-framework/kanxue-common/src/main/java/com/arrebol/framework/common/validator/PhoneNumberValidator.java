@@ -1,4 +1,4 @@
-package com.arrebol.kanxue.auth.validator;
+package com.arrebol.framework.common.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
