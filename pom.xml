@@ -22,6 +22,7 @@
         <module>kanxue-gateway</module>
         <module>kanxue-oss</module>
         <module>kanxue-user</module>
+        <module>kanxue-kv</module>
     </modules>
 
     <properties>
