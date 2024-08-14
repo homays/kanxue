@@ -42,5 +42,15 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
+        <!-- Cassandra 存储 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-cassandra</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.arrebol</groupId>
+            <artifactId>kanxue-kv-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -257,6 +257,12 @@
                 <artifactId>kanxue-user-api</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.arrebol</groupId>
+                <artifactId>kanxue-kv-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
